@@ -48,15 +48,15 @@ class SessionStore(context: Context) {
                 accessToken = mediaUserToken,
                 refreshToken = mediaUserToken,
             ),
-            storefront.ifBlank { "cl" },
+            storefront.ifBlank { "us" },
         )
     }
 
     fun load(): Session? = runCatching { parse(SecretFiles.read(file) ?: return null) }.getOrNull()
 
     fun storefront(): String = runCatching {
-        SecretFiles.read(file)?.let { JSONObject(it).optString("storefront", "cl") } ?: "cl"
-    }.getOrDefault("cl")
+        SecretFiles.read(file)?.let { JSONObject(it).optString("storefront", "us") } ?: "us"
+    }.getOrDefault("us")
 
     fun clear() { runCatching { file.delete() } }
 
